@@ -15,6 +15,8 @@
 # Test folders
 /[Aa]ssets/[Tt]est/
 /[Aa]ssets/[Tt]ests/
+/[Aa]ssets/[Tt]est.meta
+/[Aa]ssets/[Tt]ests.meta
 
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
