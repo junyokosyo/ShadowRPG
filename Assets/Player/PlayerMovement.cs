@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerState))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Settings")]
@@ -8,23 +8,31 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private PlayerInputReader input;
 
-    // 外部参照用
+    // 外部参照用（Visualや攻撃用）
     public Vector3 MoveDirection { get; private set; }
 
     private Rigidbody rb;
     private PlayerState state;
+    private Vector2 cachedInput;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         state = GetComponent<PlayerState>();
+
+        // 勝手に回転しないように
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    private void Update()
+    {
+        // 入力は Update
+        cachedInput = input.MoveInput;
     }
 
     private void FixedUpdate()
     {
-        Vector2 moveInput = input.MoveInput;
-
-        // カメラ基準の方向
+        // カメラ基準ベクトル
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
 
@@ -34,25 +42,24 @@ public class PlayerMovement : MonoBehaviour
         camForward.Normalize();
         camRight.Normalize();
 
-        // 入力をワールド方向へ変換
+        // 入力 → ワールド方向
         Vector3 rawDir =
-            camForward * moveInput.y +
-            camRight * moveInput.x;
+            camForward * cachedInput.y +
+            camRight * cachedInput.x;
 
-        // 状態更新
         bool isMoving = rawDir.sqrMagnitude > 0.001f;
-
         state.SetMoving(isMoving);
 
         MoveDirection = isMoving ? rawDir.normalized : Vector3.zero;
 
-        // 実移動
-        Vector3 velocity = new Vector3(
+        // ★左右だけ向きを更新
+        state.SetFacing(cachedInput.x);
+
+        // 実際の移動
+        rb.linearVelocity = new Vector3(
             MoveDirection.x * speed,
             rb.linearVelocity.y,
             MoveDirection.z * speed
         );
-
-        rb.linearVelocity = velocity;
     }
 }
