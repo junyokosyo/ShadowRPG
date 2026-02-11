@@ -101,8 +101,8 @@ GameObject:
   - component: {fileID: 2363467872963540543}
   - component: {fileID: 1698251096288756903}
   - component: {fileID: 1220536225006637269}
-  - component: {fileID: 2672566820737526785}
   - component: {fileID: 3053421020001672203}
+  - component: {fileID: 2672566820737526785}
   m_Layer: 0
   m_Name: Vusual
   m_TagString: Untagged
@@ -197,6 +197,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVisual
   state: {fileID: 5268390222374610340}
   sprite: {fileID: 1698251096288756903}
+--- !u!114 &3053421020001672203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7141937017928185500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ad828d80871c84098f4bfc5eab1cde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+  animator: {fileID: 2672566820737526785}
+  state: {fileID: 5268390222374610340}
 --- !u!95 &2672566820737526785
 Animator:
   serializedVersion: 7
@@ -219,20 +233,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3053421020001672203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7141937017928185500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4ad828d80871c84098f4bfc5eab1cde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
-  animator: {fileID: 2672566820737526785}
-  state: {fileID: 5268390222374610340}
 --- !u!1 &7711373750799766057
 GameObject:
   m_ObjectHideFlags: 0
