@@ -1,11 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputReader : MonoBehaviour
 {
     public Vector2 MoveInput { get; private set; }
-    public bool IsDiving { get; private set; } 
-
+    public bool IsDiving { get; private set; }
+    public event Action<bool> OnDiveChanged;
     private InputSystem_Actions input;
 
     private void Awake()
@@ -42,5 +43,6 @@ public class PlayerInputReader : MonoBehaviour
     private void OnDive(InputAction.CallbackContext ctx)
     {
         IsDiving = !IsDiving;
+        OnDiveChanged?.Invoke(IsDiving);
     }
 }
