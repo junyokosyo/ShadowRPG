@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (state.IsActionLocked) return;
         // カメラ基準ベクトル
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;

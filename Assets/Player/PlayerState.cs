@@ -7,6 +7,7 @@ public class PlayerState : MonoBehaviour
     public bool IsDiving { get; private set; }
     public bool IsDetecctable { get;private set; }=true;
     public bool IsOnSpotted { get; private set; }=false;
+    public bool IsActionLocked { get;private set; }
 
     public event System.Action OnSpottedEvent;
     /// <summary>
@@ -46,5 +47,10 @@ public class PlayerState : MonoBehaviour
 
         IsOnSpotted = true;
         OnSpottedEvent?.Invoke();
+    }
+
+    public void SetActionLocked(bool locked)
+    {
+        IsActionLocked = locked;
     }
 }

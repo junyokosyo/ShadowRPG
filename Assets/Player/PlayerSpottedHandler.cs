@@ -26,6 +26,7 @@ public class PlayerSpottedHandler : MonoBehaviour
         {
             animator.SetTrigger("Spotted");
             hasSpottedEffectPlayed = true;
+            playerState.SetActionLocked(true);
         }
 
 

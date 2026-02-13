@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputReader : MonoBehaviour
 {
+    [SerializeField] private PlayerState playerState;
     public Vector2 MoveInput { get; private set; }
     public bool IsDiving { get; private set; }
     public event Action<bool> OnDiveChanged;
@@ -42,7 +43,11 @@ public class PlayerInputReader : MonoBehaviour
 
     private void OnDive(InputAction.CallbackContext ctx)
     {
-        IsDiving = !IsDiving;
-        OnDiveChanged?.Invoke(IsDiving);
+        if (playerState.IsActionLocked)return; // 連打防止
+        
+            IsDiving = !IsDiving;
+            OnDiveChanged?.Invoke(IsDiving);
+            if (IsDiving) { playerState.SetActionLocked(true); }
+        
     }
 }
