@@ -28,8 +28,8 @@ public class VisionSpotLight : MonoBehaviour
         if (enemyVision != null && visionLight != null)
         {
             visionLight.transform.rotation = transform.rotation;
-            visionLight.range = enemyVision.viewRadius;
-            visionLight.spotAngle = enemyVision.viewAngle;
+            visionLight.range = enemyVision.ViewRadius;
+            visionLight.spotAngle = enemyVision.ViewAngle;
         }
     }
 }

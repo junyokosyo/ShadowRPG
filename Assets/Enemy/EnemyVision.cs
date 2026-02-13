@@ -5,15 +5,17 @@ using System.Collections;
 public class EnemyVision : MonoBehaviour
 {
     [Header("視界設定")]
-    public float viewRadius = 5f;
+    [SerializeField] private float viewRadius = 5f;
     [Range(0, 360)]
-    public float viewAngle = 60f;
+    [SerializeField] private float viewAngle = 60f;
+    public float ViewRadius => viewRadius;
+    public float ViewAngle => viewAngle;
 
     [Header("検知対象")]
-    public LayerMask targetMask;   // 例: Player
-    public LayerMask obstacleMask; // 例: 壁や障害物
+    [SerializeField] private LayerMask targetMask;   // 例: Player
+    [SerializeField] private LayerMask obstacleMask; // 例: 壁や障害物
 
-    public Action<Transform> OnTargetSpotted;  // 視界に入ったときのコールバック
+    public Action<Transform> OnTargetSpotted;  // 視界に入ったときのコールバックここ二つは使わないかも
     public Action<Transform> OnTargetLost;     // 視界から出たときのコールバック
     
     private Transform detectedTarget;
