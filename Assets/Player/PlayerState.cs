@@ -6,7 +6,7 @@ public class PlayerState : MonoBehaviour
     public bool FacingRight { get; private set; } = true;
     public bool IsDiving { get; private set; }
     public bool IsDetecctable { get;private set; }=true;
-
+    public bool IsOnSpotted { get; private set; }
 
     /// <summary>
     /// プレイヤーに動いているかどうかを設定する
@@ -38,5 +38,10 @@ public class PlayerState : MonoBehaviour
     private void UpdateDetectable()
     {
         IsDetecctable = !IsDiving;
+    }
+    public void OnSpotted()
+    {
+        Debug.Log("プレイヤーが見つかりました！");
+        IsOnSpotted = true;
     }
 }
