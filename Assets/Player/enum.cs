@@ -3,7 +3,8 @@ using UnityEngine;
 public enum PlayerMoveState
 {
     Idle,
-    Move
+    Move,
+    Shade
 }
 
 public enum PlayerActionState

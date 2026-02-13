@@ -2,13 +2,26 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
-    public PlayerControlState ControlState { get; private set; }
-    public PlayerActionState ActionState { get; private set; }
-
     public bool IsMoving { get; private set; }
-
-    public void SetMoving(bool isMoving)
+    public bool FacingRight { get; private set; } = true;
+    public bool IsDiving { get; private set; }
+    public void SetMoving(bool moving)
     {
-        IsMoving = isMoving;
+        IsMoving = moving;
+    }
+
+    /// <summary>
+    /// ¶‰E‚ÌŒü‚«‚¾‚¯XV‚·‚é
+    /// </summary>
+    public void SetFacing(float x)
+    {
+        if (x > 0.01f)
+            FacingRight = true;
+        else if (x < -0.01f)
+            FacingRight = false;
+    }
+    public void SetDiving(bool diving)
+    {
+        IsDiving = diving;
     }
 }
