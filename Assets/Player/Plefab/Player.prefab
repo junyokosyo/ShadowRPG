@@ -150,7 +150,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: ecc2ea41dd9a25647bc54c124fb669b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 5268390222374610340}
   - component: {fileID: 8650421489180100319}
   - component: {fileID: 4908978512465975917}
+  - component: {fileID: 7539397387969248002}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -295,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea1ce9bd9365d243987fc5fad0c3c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 5
+  speed: 2
   cameraTransform: {fileID: 0}
   input: {fileID: 8578253293787304818}
 --- !u!114 &5268390222374610340
@@ -358,3 +359,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &7539397387969248002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7711373750799766057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643aba5d861c5ec4f95ee95342a908a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShadowController
+  input: {fileID: 8578253293787304818}
+  animator: {fileID: 2672566820737526785}
+  playerRenderer: {fileID: 1698251096288756903}
+  state: {fileID: 5268390222374610340}

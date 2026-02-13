@@ -5,14 +5,20 @@ public class PlayerShadowController : MonoBehaviour
     [SerializeField] PlayerInputReader input;
     [SerializeField] Animator animator;
     [SerializeField] Renderer playerRenderer;
-    
+    [SerializeField] PlayerState state;
 
-    private Material mat;
+    private MaterialPropertyBlock mpb;
+    private float currentDissolve;
+    private float targetDissolve;
 
     private void Awake()
     {
-        mat = playerRenderer.material;
+        mpb = new MaterialPropertyBlock();
+        playerRenderer.GetPropertyBlock(mpb);
+        currentDissolve = mpb.GetFloat("_Dissolve");
+        targetDissolve = currentDissolve;
     }
+
     private void OnEnable()
     {
         input.OnDiveChanged += HandleDiveChanged;
@@ -25,21 +31,26 @@ public class PlayerShadowController : MonoBehaviour
 
     private void HandleDiveChanged(bool isDiving)
     {
+        // 状態を更新（ここが重要）
+        state.SetDiving(isDiving);
+
+        // 目標値だけ更新
+        targetDissolve = isDiving ? 2f : 0f;
+
         animator.SetBool("IsDiving", isDiving);
-        StopAllCoroutines();
-        StartCoroutine(DissolveRoutine(isDiving));
     }
 
-    private System.Collections.IEnumerator DissolveRoutine(bool isDiving)
+    private void Update()
     {
-        float target = isDiving ? 1.5f : 0f;
+        // 毎フレームなめらかに変化
+        currentDissolve = Mathf.MoveTowards(
+            currentDissolve,
+            targetDissolve,
+            Time.deltaTime * 2f
+        );
 
-        while (!Mathf.Approximately(mat.GetFloat("_Dissolve"), target))
-        {
-            float current = mat.GetFloat("_Dissolve");
-            float value = Mathf.MoveTowards(current, target, Time.deltaTime * 2f);
-            mat.SetFloat("_Dissolve", value);
-            yield return null;
-        }
+        playerRenderer.GetPropertyBlock(mpb);
+        mpb.SetFloat("_Dissolve", currentDissolve);
+        playerRenderer.SetPropertyBlock(mpb);
     }
 }
