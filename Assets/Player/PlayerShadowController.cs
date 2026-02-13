@@ -5,6 +5,7 @@ public class PlayerShadowController : MonoBehaviour
     [SerializeField] PlayerInputReader input;
     [SerializeField] Animator animator;
     [SerializeField] Renderer playerRenderer;
+    
 
     private Material mat;
 
