@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.21176471}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -275,6 +275,7 @@ GameObject:
   - component: {fileID: 5268390222374610340}
   - component: {fileID: 4908978512465975917}
   - component: {fileID: 7539397387969248002}
+  - component: {fileID: 5812392165529909227}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -382,3 +383,26 @@ MonoBehaviour:
   animator: {fileID: 2672566820737526785}
   playerRenderer: {fileID: 1698251096288756903}
   state: {fileID: 5268390222374610340}
+--- !u!136 &5812392165529909227
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7711373750799766057}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.057891905
+  m_Height: 0.3979871
+  m_Direction: 1
+  m_Center: {x: -0.0029169917, y: 0.014930859, z: 0.0041100383}
