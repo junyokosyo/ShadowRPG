@@ -63,4 +63,39 @@ public class PlayerMovement : MonoBehaviour
             MoveDirection.z * speed
         );
     }
+    public System.Collections.IEnumerator MoveToPosition(Vector3 targetPos, float moveSpeed)
+    {
+        // 1. 操作をロックする
+        state.SetActionLocked(true);
+
+        // 2. 目的地に近づくまでループ
+        // 高さは無視して平面（X, Z）の距離で判定すると安定します
+        float distance = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                          new Vector3(targetPos.x, 0, targetPos.z));
+
+        while (distance > 0.1f)
+        {
+            Vector3 dir = (targetPos - transform.position).normalized;
+
+            // 物理移動を継続
+            rb.linearVelocity = new Vector3(
+                dir.x * moveSpeed,
+                rb.linearVelocity.y,
+                dir.z * moveSpeed
+            );
+
+            // 距離を更新
+            distance = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                        new Vector3(targetPos.x, 0, targetPos.z));
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        // 3. 到着したらピタッと止める
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+        transform.position = new Vector3(targetPos.x, transform.position.y, targetPos.z);
+
+        // 4. 操作ロックを解除
+        state.SetActionLocked(false);
+    }
 }
