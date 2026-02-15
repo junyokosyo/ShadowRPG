@@ -273,7 +273,6 @@ GameObject:
   - component: {fileID: 8578253293787304818}
   - component: {fileID: 3029679535653608588}
   - component: {fileID: 5268390222374610340}
-  - component: {fileID: 8650421489180100319}
   - component: {fileID: 4908978512465975917}
   - component: {fileID: 7539397387969248002}
   m_Layer: 3
@@ -312,6 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9fc36a0b6e59964991ff0b6b762c022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputReader
+  playerState: {fileID: 5268390222374610340}
 --- !u!114 &3029679535653608588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,27 +339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01896a94ed465544c9730d3242c6921a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerState
---- !u!65 &8650421489180100319
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7711373750799766057}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.1608622, y: 0.3, z: 0.25}
-  m_Center: {x: 0.0011712313, y: -0.019999996, z: 0}
 --- !u!54 &4908978512465975917
 Rigidbody:
   m_ObjectHideFlags: 0
