@@ -28,9 +28,5 @@ public class PlayerSpottedHandler : MonoBehaviour
             hasSpottedEffectPlayed = true;
             playerState.SetActionLocked(true);
         }
-
-
-        //   if (postProcessVolume != null)
-        //     postProcessVolume.weight = 1f;
     }
 }

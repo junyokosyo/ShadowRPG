@@ -43,7 +43,6 @@ public class PlayerState : MonoBehaviour
     }
     public void OnSpotted()
     {
-        if (IsOnSpotted) return;
 
         IsOnSpotted = true;
         OnSpottedEvent?.Invoke();

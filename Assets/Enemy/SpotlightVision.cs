@@ -5,6 +5,7 @@ public class SpotlightVision : MonoBehaviour
 {
     [SerializeField] private PlayerState playerState;
     [SerializeField] private float angleOffset = 7f;
+    [SerializeField] private bool spotWhenDiving = true;
     private Light spotLight;
 
     void Awake()
@@ -17,7 +18,6 @@ public class SpotlightVision : MonoBehaviour
         if (playerState.IsOnSpotted == false)
         {
             if (playerState == null) return;
-            if (!playerState.IsDetecctable) return;
 
             Vector3 toPlayer = playerState.transform.position - transform.position;
             float distance = toPlayer.magnitude;
@@ -35,7 +35,11 @@ public class SpotlightVision : MonoBehaviour
                 {
                     if (hit.transform == playerState.transform)
                     {
-                        playerState.OnSpotted();
+                        // 「今ダイブ中か」と「ダイブ中に反応する設定か」が一致した時に捕まえる
+                        if (playerState.IsDiving == spotWhenDiving)
+                        {
+                            playerState.OnSpotted();
+                        }
                     }
                 }
             }
