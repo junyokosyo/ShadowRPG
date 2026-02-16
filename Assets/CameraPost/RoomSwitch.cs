@@ -12,7 +12,7 @@ public class RoomSwitch : MonoBehaviour
     [SerializeField] private Transform posA; // A地点（部屋A側の出口）
     [SerializeField] private Transform posB; // B地点（部屋B側の出口）
 
-    [SerializeField] private float moveSpeed = 4f;
+    [SerializeField] private float moveDuration = 1.5f;
 
     // 現在どっちの部屋にいるか（初期状態でAなら false、Bなら true にしておく）
     [SerializeField] private bool isInsideB = false;
@@ -33,21 +33,14 @@ public class RoomSwitch : MonoBehaviour
     {
         isBusy = true;
 
-        // 目的地とカメラを判定
-        // BにいないならBへ向かう、BにいるならAへ戻る
-        Transform targetPos = isInsideB ? posA : posB;
-
-        // カメラの優先度（Priority）を切り替え
-        camA.Priority = isInsideB ? 10 : 0;
-        camB.Priority = isInsideB ? 0 : 10;
-
-        // プレイヤーの移動が終わるまで待機
-        yield return StartCoroutine(player.MoveToPosition(targetPos.position, moveSpeed));
-
-        // 部屋の状態を反転
         isInsideB = !isInsideB;
+        Transform targetPos = isInsideB ? posB : posA;
 
-        // 連続で発火しないように少しだけクールダウン
+        camA.Priority = isInsideB ? 0 : 10;
+        camB.Priority = isInsideB ? 10 : 0;
+
+        yield return StartCoroutine(player.MoveToPosition(targetPos.position, moveDuration));
+
         yield return new WaitForSeconds(0.5f);
         isBusy = false;
     }

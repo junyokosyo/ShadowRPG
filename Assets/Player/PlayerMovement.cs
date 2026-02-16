@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private PlayerInputReader input;
 
-    // 外部参照用（Visualや攻撃用）
+    // 外部参照用（Visual用）
     public Vector3 MoveDirection { get; private set; }
 
     private Rigidbody rb;
@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // 入力は Update
         cachedInput = input.MoveInput;
     }
 
@@ -53,49 +52,40 @@ public class PlayerMovement : MonoBehaviour
 
         MoveDirection = isMoving ? rawDir.normalized : Vector3.zero;
 
-        // ★左右だけ向きを更新
         state.SetFacing(cachedInput.x);
 
-        // 実際の移動
+        // 移動
         rb.linearVelocity = new Vector3(
             MoveDirection.x * speed,
             rb.linearVelocity.y,
             MoveDirection.z * speed
         );
     }
-    public System.Collections.IEnumerator MoveToPosition(Vector3 targetPos, float moveSpeed)
+    public System.Collections.IEnumerator MoveToPosition(Vector3 targetPos, float duration)
     {
-        // 1. 操作をロックする
         state.SetActionLocked(true);
+        state.SetMoving(true);
 
-        // 2. 目的地に近づくまでループ
-        // 高さは無視して平面（X, Z）の距離で判定すると安定します
-        float distance = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
-                                          new Vector3(targetPos.x, 0, targetPos.z));
+        Vector3 startPos = transform.position;
+        float elapsed = 0f;
 
-        while (distance > 0.1f)
+        while (elapsed < duration)
         {
-            Vector3 dir = (targetPos - transform.position).normalized;
+            elapsed += Time.fixedDeltaTime;
 
-            // 物理移動を継続
-            rb.linearVelocity = new Vector3(
-                dir.x * moveSpeed,
-                rb.linearVelocity.y,
-                dir.z * moveSpeed
-            );
+            // 現在の進行度 (0.0 ～ 1.0) を計算
+            float t = elapsed / duration;
 
-            // 距離を更新
-            distance = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
-                                        new Vector3(targetPos.x, 0, targetPos.z));
+            // 物理演算で動かしたいので、MovePosition を使うのが最も安定します
+            rb.MovePosition(Vector3.Lerp(startPos, targetPos, t));
+
+            // 向きの更新（必要であれば）
+            Vector3 dir = (targetPos - startPos).normalized;
+            state.SetFacing(dir.x);
 
             yield return new WaitForFixedUpdate();
         }
-
-        // 3. 到着したらピタッと止める
-        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-        transform.position = new Vector3(targetPos.x, transform.position.y, targetPos.z);
-
-        // 4. 操作ロックを解除
+        state.SetMoving(false);
         state.SetActionLocked(false);
     }
 }
