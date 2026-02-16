@@ -141,5 +141,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpotlightVision
   playerState: {fileID: 0}
-  angleOffset: 7
+  angleOffset: 9.5
   spotWhenDiving: 1

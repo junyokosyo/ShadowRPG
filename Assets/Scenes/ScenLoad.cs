@@ -27,9 +27,11 @@ public class SceneLoad : MonoBehaviour
             fadeCanvas.alpha = Mathf.Lerp(0f, 1f, time / fadeDuration);
             yield return null;
         }
-
+        if (SimpleSoundManager.Instance != null)
+        {
+            SimpleSoundManager.Instance.PlayBGMByIndex(0);
+        }
         fadeCanvas.alpha = 1f;
-
         SceneManager.LoadScene(sceneName);
     }
 }

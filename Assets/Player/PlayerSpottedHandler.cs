@@ -24,6 +24,10 @@ public class PlayerSpottedHandler : MonoBehaviour
     void HandleSpotted()
     {
         Debug.Log("演出開始");
+        if (SimpleSoundManager.Instance != null)
+        {
+            SimpleSoundManager.Instance.PlaySEByIndex(0);
+        }
         // ポストプロセスの演出を開始
         if (postProcessVolume != null)
         {
@@ -43,7 +47,7 @@ public class PlayerSpottedHandler : MonoBehaviour
         {
             float elapsed = 0f;
             // 0（通常）から 10（真っ白）くらいまで上げる
-            float targetExposure = 3.5f;
+            float targetExposure = 9f;
 
             while (elapsed < effectDuration)
             {
@@ -56,7 +60,7 @@ public class PlayerSpottedHandler : MonoBehaviour
                 yield return null;
             }
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         restScript.Reset();
 
 

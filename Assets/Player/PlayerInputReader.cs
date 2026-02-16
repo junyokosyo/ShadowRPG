@@ -44,8 +44,11 @@ public class PlayerInputReader : MonoBehaviour
     private void OnDive(InputAction.CallbackContext ctx)
     {
         if (playerState.IsActionLocked)return; // 連打防止
-        
-            IsDiving = !IsDiving;
+        if (SimpleSoundManager.Instance != null)
+        {
+            SimpleSoundManager.Instance.PlaySEByIndex(1);
+        }
+        IsDiving = !IsDiving;
             OnDiveChanged?.Invoke(IsDiving);
             if (IsDiving) { playerState.SetActionLocked(true); }
         
