@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private PlayerInputReader input;
 
-    // 外部参照用（Visualや攻撃用）
+    // 外部参照用（Visual用）
     public Vector3 MoveDirection { get; private set; }
 
     private Rigidbody rb;
@@ -26,12 +26,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // 入力は Update
         cachedInput = input.MoveInput;
     }
 
     private void FixedUpdate()
     {
+        if (state.IsActionLocked) return;
         // カメラ基準ベクトル
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
@@ -52,14 +52,40 @@ public class PlayerMovement : MonoBehaviour
 
         MoveDirection = isMoving ? rawDir.normalized : Vector3.zero;
 
-        // ★左右だけ向きを更新
         state.SetFacing(cachedInput.x);
 
-        // 実際の移動
+        // 移動
         rb.linearVelocity = new Vector3(
             MoveDirection.x * speed,
             rb.linearVelocity.y,
             MoveDirection.z * speed
         );
+    }
+    public System.Collections.IEnumerator MoveToPosition(Vector3 targetPos, float duration)
+    {
+        state.SetActionLocked(true);
+        state.SetMoving(true);
+
+        Vector3 startPos = transform.position;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.fixedDeltaTime;
+
+            // 現在の進行度 (0.0 ～ 1.0) を計算
+            float t = elapsed / duration;
+
+            // 物理演算で動かしたいので、MovePosition を使うのが最も安定します
+            rb.MovePosition(Vector3.Lerp(startPos, targetPos, t));
+
+            // 向きの更新（必要であれば）
+            Vector3 dir = (targetPos - startPos).normalized;
+            state.SetFacing(dir.x);
+
+            yield return new WaitForFixedUpdate();
+        }
+        state.SetMoving(false);
+        state.SetActionLocked(false);
     }
 }

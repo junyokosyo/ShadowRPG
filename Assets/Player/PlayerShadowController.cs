@@ -42,7 +42,6 @@ public class PlayerShadowController : MonoBehaviour
 
     private void Update()
     {
-        // 毎フレームなめらかに変化
         currentDissolve = Mathf.MoveTowards(
             currentDissolve,
             targetDissolve,

@@ -11,4 +11,9 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator.SetBool(IsMovingHash, state.IsMoving);
     }
+
+    public void OnDiveAnimationEnd()
+    {
+        state.SetActionLocked(false);
+    }  
 }
